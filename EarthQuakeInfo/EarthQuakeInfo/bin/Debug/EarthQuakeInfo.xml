@@ -1,0 +1,582 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EarthQuakeInfo</name>
+    </assembly>
+    <members>
+        <member name="T:HondarerSoft.Utils.HttpClientUtil">
+            <summary>
+            <see cref="T:System.Net.Http.HttpClient"/> に関するユーティリティー機能を提供します。
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.HttpClientUtil.SafeGetStringAsync(System.String,System.Net.Http.HttpClient)">
+            <summary>
+            指定 URI に GET 要求を送信し、非同期操作で応答本体を文字列として返します。
+            </summary>
+            <param name="uri">要求の送信先 URI。</param>
+            <param name="client">
+            要求に使用する <see cref="T:System.Net.Http.HttpClient"/> を指定します。省略可能です。
+            省略時は内部で <see cref="T:System.Net.Http.HttpClient"/> のインスタンスを生成します。
+            ソケットに関する資源の問題から、本パラメータには呼び出し元で管理された静的な <see cref="T:System.Net.Http.HttpClient"/> のインスタンスを指定することを推奨します。
+            </param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> を返します。非同期操作を表すタスク オブジェクト。</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.HttpClientUtil.SafeGetByteArrayAsync(System.String,System.Net.Http.HttpClient)">
+            <summary>
+            指定 URI に GET 要求を送信し、非同期操作で応答本体をバイト配列として返します。
+            </summary>
+            <param name="uri">要求の送信先 URI。</param>
+            <param name="client">
+            要求に使用する <see cref="T:System.Net.Http.HttpClient"/> を指定します。省略可能です。
+            省略時は内部で <see cref="T:System.Net.Http.HttpClient"/> のインスタンスを生成します。
+            ソケットに関する資源の問題から、本パラメータには呼び出し元で管理された静的な <see cref="T:System.Net.Http.HttpClient"/> のインスタンスを指定することを推奨します。
+            </param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> を返します。非同期操作を表すタスク オブジェクト。</returns>
+        </member>
+        <member name="T:HondarerSoft.Utils.BitmapImageUtil">
+            <summary>
+            <see cref="T:System.Windows.Media.Imaging.BitmapImage"/> に関するユーティリティー機能を提供します。
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.BitmapImageUtil.CreateBitmap(System.Byte[],System.Boolean)">
+            <summary>
+            バイト配列を <see cref="T:System.Windows.Media.Imaging.BitmapImage"/> に変換します。
+            この操作は UI スレッドで実行する必要があります。非 UI スレッドで実行すると、深刻なリソース リークを引き起こします。
+            </summary>
+            <remarks>
+            http://pierre3.hatenablog.com/entry/2015/10/25/001207
+            </remarks>
+            <param name="bytes">バイト配列。</param>
+            <param name="freezing">生成した <see cref="T:System.Windows.Media.Imaging.BitmapImage"/> を変更不可能にするかどうか。省略可能です。既定値は <c>true</c> です。</param>
+            <returns>生成した <see cref="T:System.Windows.Media.Imaging.BitmapImage"/>。変換に失敗した場合は <c>null</c> を返します。</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.BitmapImageUtil.CreateBitmapAsync(System.Byte[],System.Boolean,System.Windows.Threading.Dispatcher)">
+            <summary>
+            バイト配列を指定された <see cref="T:System.Windows.Threading.Dispatcher"/> 上で <see cref="T:System.Windows.Media.Imaging.BitmapImage"/> に非同期変換します。
+            </summary>
+            <param name="bytes">バイト配列。</param>
+            <param name="freezing">生成した <see cref="T:System.Windows.Media.Imaging.BitmapImage"/> を変更不可能にするかどうか。省略可能です。既定値は <c>true</c> です。</param>
+            <param name="dispatcherForBitmapCreation"><see cref="T:System.Windows.Media.Imaging.BitmapImage"/> に変換する際に使用する <see cref="T:System.Windows.Threading.Dispatcher"/>。省略可能です。</param>
+            <returns>生成した <see cref="T:System.Windows.Media.Imaging.BitmapImage"/>を返す非同期操作。変換に失敗した場合は <c>null</c> を返します。</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.BitmapImageUtil.GetImageAsync(System.String,System.Net.Http.HttpClient,System.Windows.Threading.Dispatcher)">
+            <summary>
+            指定された URI からデータを読み取り、<see cref="T:System.Windows.Media.Imaging.BitmapImage"/> を返す非同期動作を返します。
+            </summary>
+            <param name="uri">画像の URI。</param>
+            <param name="client">
+            要求に使用する <see cref="T:System.Net.Http.HttpClient"/> を指定します。省略可能です。
+            省略時は内部で <see cref="T:System.Net.Http.HttpClient"/> のインスタンスを生成します。
+            ソケットに関する資源の問題から、本パラメータには呼び出し元で管理された静的な <see cref="T:System.Net.Http.HttpClient"/> のインスタンスを指定することを推奨します。
+            </param>
+            <param name="dispatcherForBitmapCreation"><see cref="T:System.Windows.Media.Imaging.BitmapImage"/> に変換する際に使用する <see cref="T:System.Windows.Threading.Dispatcher"/>。省略可能です。</param>
+            <returns><see cref="T:System.Windows.Media.Imaging.BitmapImage"/> を返す非同期操作。失敗した場合は <c>null</c> を返します。</returns>
+        </member>
+        <member name="T:HondarerSoft.Utils.JsonUtil">
+            <summary>
+            <see cref="N:System.Runtime.Serialization.Json"/> に関するユーティリティー機能を提供します。
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.JsonUtil.JsonToObject``1(System.String,``0@,System.Runtime.Serialization.Json.DataContractJsonSerializerSettings)">
+            <summary>
+            json をオブジェクトにデシリアライズします。
+            </summary>
+            <typeparam name="T">デシリアライズしたいオブジェクトの型。</typeparam>
+            <param name="json">デシリアライズしたい json。</param>
+            <param name="deserializedObject">デシリアライズしたオブジェクト。デシリアライズに失敗した場合は <c>null</c> を返します。</param>
+            <param name="settings">デシリアライズに使用する <see cref="T:System.Runtime.Serialization.Json.DataContractJsonSerializerSettings"/> を指定します。省略可能です。</param>
+            <returns>デシリアライズに成功した場合は <c>true</c>、失敗した場合は <c>false</c> を返します。</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.JsonUtil.JsonUriToObjectAsync``1(System.String,System.Net.Http.HttpClient,System.Runtime.Serialization.Json.DataContractJsonSerializerSettings)">
+            <summary>
+            指定 URI から json を GET し、オブジェクトにデシリアライズします。
+            </summary>
+            <typeparam name="T">デシリアライズしたいオブジェクトの型。</typeparam>
+            <param name="uri">デシリアライズしたい json を示す URI。</param>
+            <param name="client">
+            要求に使用する <see cref="T:System.Net.Http.HttpClient"/> を指定します。省略可能です。
+            省略時は内部で <see cref="T:System.Net.Http.HttpClient"/> のインスタンスを生成します。
+            ソケットに関する資源の問題から、本パラメータには呼び出し元で管理された static な <see cref="T:System.Net.Http.HttpClient"/> のインスタンスを指定することを推奨します。
+            </param>
+            <param name="settings">デシリアライズに使用する <see cref="T:System.Runtime.Serialization.Json.DataContractJsonSerializerSettings"/> を指定します。省略可能です。</param>
+            <returns>デシリアライズに成功した場合はオブジェクト、失敗した場合は <c>null</c> を返します。</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.JsonUtil.ObjectToJson``1(``0,System.Runtime.Serialization.Json.DataContractJsonSerializerSettings)">
+            <summary>
+            オブジェクトを json にシリアライズします。
+            </summary>
+            <typeparam name="T">シリアライズしたいオブジェクトの型。</typeparam>
+            <param name="serializeObject">シリアライズしたいオブジェクト。</param>
+            <param name="settings">シリアライズに使用する <see cref="T:System.Runtime.Serialization.Json.DataContractJsonSerializerSettings"/> を指定します。省略可能です。</param>
+            <returns>シリアライズされた json。変換に失敗した場合は <c>null</c> を返します。</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.JsonUtil.DefaultSettings">
+            <summary>
+            このクラスで利用する既定の <see cref="T:System.Runtime.Serialization.Json.DataContractJsonSerializerSettings"/> を返します。
+            </summary>
+            <returns>このクラスで利用する既定の <see cref="T:System.Runtime.Serialization.Json.DataContractJsonSerializerSettings"/>。</returns>
+        </member>
+        <member name="T:HondarerSoft.Utils.SpeechMSP">
+            <summary>
+            Microsoft Speech Object Library を利用した音声合成機能を提供します。
+            </summary>
+        </member>
+        <member name="F:HondarerSoft.Utils.SpeechMSP.spVoice">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.SpeechMSP.#cctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.SpeechMSP.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.SpeechMSP.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="description"></param>
+        </member>
+        <member name="M:HondarerSoft.Utils.SpeechMSP.SetAudioOutput(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="description"></param>
+        </member>
+        <member name="M:HondarerSoft.Utils.SpeechMSP.SpeakAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="str"></param>
+            <param name="culture"></param>
+        </member>
+        <member name="T:HondarerSoft.Utils.BindableBase">
+            <summary>
+            ViewModel の基底機能を提供します。
+            </summary>
+        </member>
+        <member name="E:HondarerSoft.Utils.BindableBase.PropertyChanged">
+            <summary>
+            プロパティが変更されたときに発生するイベント ハンドラーを保持します。
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.BindableBase.SetProperty``1(``0@,``0,System.String)">
+            <summary>
+            プロパティが既に目的の値と一致しているかどうかを確認します。
+            必要な場合のみ、プロパティを設定し、リスナーに通知します。
+            </summary>
+            <typeparam name="T">プロパティの型。</typeparam>
+            <param name="storage">get アクセス操作子と set アクセス操作子両方を使用したプロパティへの参照。</param>
+            <param name="value">プロパティに必要な値。</param>
+            <param name="propertyName">
+            リスナーに通知するために使用するプロパティの名前。
+            この値は省略可能で、<see cref="T:System.Runtime.CompilerServices.CallerMemberNameAttribute"/> をサポートするコンパイラから呼び出す場合に自動的に指定できます。
+            </param>
+            <returns>
+            値が変更された場合は <c>true</c>、既存の値が目的の値に一致した場合は <c>false</c> を返します。
+            </returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.BindableBase.OnPropertyChanged(System.String)">
+            <summary>
+            プロパティ値が変更されたことをリスナーに通知します。
+            </summary>
+            <param name="propertyName">リスナーに通知するために使用するプロパティの名前。
+            この値は省略可能で、<see cref="T:System.Runtime.CompilerServices.CallerMemberNameAttribute"/> をサポートするコンパイラから呼び出す場合に自動的に指定できます。
+            </param>
+        </member>
+        <member name="T:HondarerSoft.Utils.WrappingStream">
+            <summary>
+            A <see cref="T:System.IO.Stream"/> that wraps another stream. The major feature of <see cref="T:HondarerSoft.Utils.WrappingStream"/> is that it does not dispose the
+            underlying stream when it is disposed; this is useful when using classes such as <see cref="T:System.IO.BinaryReader"/> and
+            <see cref="T:System.Security.Cryptography.CryptoStream"/> that take ownership of the stream passed to their constructors.
+            </summary>
+        </member>
+        <member name="F:HondarerSoft.Utils.WrappingStream.streamBase">
+            <summary>
+            The wrapped stream.
+            </summary>
+        </member>
+        <member name="P:HondarerSoft.Utils.WrappingStream.WrappedStream">
+            <summary>
+            Gets the wrapped stream.
+            </summary>
+            <value>The wrapped stream.</value>
+        </member>
+        <member name="P:HondarerSoft.Utils.WrappingStream.CanRead">
+            <summary>
+            Gets a value indicating whether the current stream supports reading.
+            </summary>
+            <value><c>true</c> if the stream supports reading; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:HondarerSoft.Utils.WrappingStream.CanSeek">
+            <summary>
+            Gets a value indicating whether the current stream supports seeking.
+            </summary>
+            <value><c>true</c> if the stream supports seeking; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:HondarerSoft.Utils.WrappingStream.CanWrite">
+            <summary>
+            Gets a value indicating whether the current stream supports writing.
+            </summary>
+            <value><c>true</c> if the stream supports writing; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:HondarerSoft.Utils.WrappingStream.Length">
+            <summary>
+            Gets the length in bytes of the stream.
+            </summary>
+        </member>
+        <member name="P:HondarerSoft.Utils.WrappingStream.Position">
+            <summary>
+            Gets or sets the position within the current stream.
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:HondarerSoft.Utils.WrappingStream"/> class.
+            </summary>
+            <param name="streamBase">The wrapped stream.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="streamBase"/> is null.</exception>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)">
+            <summary>
+            Begins an asynchronous read operation.
+            </summary>
+            <param name="buffer">The buffer to read the data into.</param>
+            <param name="offset">The byte offset in <paramref name="buffer"/> at which to begin writing data read from the stream.</param>
+            <param name="count">The maximum number of bytes to read.</param>
+            <param name="callback">An optional asynchronous callback, to be called when the read is complete.</param>
+            <param name="state">A user-provided object that distinguishes this particular asynchronous read request from other requests.</param>
+            <returns>An <see cref="T:System.IAsyncResult"/> that represents the asynchronous read, which could still be pending.</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)">
+            <summary>
+            Begins an asynchronous write operation.
+            </summary>
+            <param name="buffer">The buffer to write data from.</param>
+            <param name="offset">The byte offset in <paramref name="buffer"/> from which to begin writing.</param>
+            <param name="count">The maximum number of bytes to write.</param>
+            <param name="callback">An optional asynchronous callback, to be called when the write is complete.</param>
+            <param name="state">A user-provided object that distinguishes this particular asynchronous write request from other requests.</param>
+            <returns>An <see cref="T:System.IAsyncResult"/> that represents the asynchronous write, which could still be pending.</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.EndRead(System.IAsyncResult)">
+            <summary>
+            Waits for the pending asynchronous read to complete.
+            </summary>
+            <param name="asyncResult">The reference to the pending asynchronous request to finish.</param>
+            <returns>
+            The number of bytes read from the stream, between zero (0) and the number of bytes you requested.
+            Streams return zero (0) only at the end of the stream, otherwise, they should block until at least one byte is available.
+            </returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.EndWrite(System.IAsyncResult)">
+            <summary>
+            Ends an asynchronous write operation.
+            </summary>
+            <param name="asyncResult">A reference to the outstanding asynchronous I/O request.</param>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.Flush">
+            <summary>
+            Clears all buffers for this stream and causes any buffered data to be written to the underlying device.
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a sequence of bytes from the current stream and advances the position
+            within the stream by the number of bytes read.
+            </summary>
+            <param name="buffer">An array of bytes. When this method returns, the buffer contains the specified byte array with the values between offset and (offset + count - 1) replaced by the bytes read from the current source.</param>
+            <param name="offset">The zero-based byte offset in buffer at which to begin storing the data read from the current stream.</param>
+            <param name="count">The maximum number of bytes to be read from the current stream.</param>
+            <returns>The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.ReadByte">
+            <summary>
+            Reads a byte from the stream and advances the position within the stream by one byte, or returns -1 if at the end of the stream.
+            </summary>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            Sets the position within the current stream.
+            </summary>
+            <param name="offset">A byte offset relative to the <paramref name="origin"/> parameter.</param>
+            <param name="origin">A value of type <see cref="T:System.IO.SeekOrigin"/> indicating the reference point used to obtain the new position.</param>
+            <returns>The new position within the current stream.</returns>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.SetLength(System.Int64)">
+            <summary>
+            Sets the length of the current stream.
+            </summary>
+            <param name="value">The desired length of the current stream in bytes.</param>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a sequence of bytes to the current stream and advances the current position
+            within this stream by the number of bytes written.
+            </summary>
+            <param name="buffer">An array of bytes. This method copies count bytes from <paramref name="buffer"/> to the current stream.</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.WriteByte(System.Byte)">
+            <summary>
+            Writes a byte to the current position in the stream and advances the position within the stream by one byte.
+            </summary>
+            <param name="value">The byte to write to the stream.</param>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources used by the <see cref="T:HondarerSoft.Utils.WrappingStream"/> and optionally releases the managed resources.
+            </summary>
+            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="M:HondarerSoft.Utils.WrappingStream.ThrowIfDisposed">
+            <summary>
+            Throws an ObjectDisposedException if this object has been disposed.
+            </summary>
+        </member>
+        <member name="T:EarthQuakeInfo.ViewModels.MainWindowViewModel">
+            <summary>
+            地震情報に関する ViewModel を提供します。
+            </summary>
+        </member>
+        <member name="F:EarthQuakeInfo.ViewModels.MainWindowViewModel.HTTP_TIMEOUT">
+            <summary>
+            HTTP のタイムアウト時間[秒]を表します。
+            </summary>
+        </member>
+        <member name="F:EarthQuakeInfo.ViewModels.MainWindowViewModel.client">
+            <summary>
+            地震情報を取得する <see cref="T:System.Net.Http.HttpClient"/> を保持します。
+            </summary>
+        </member>
+        <member name="F:EarthQuakeInfo.ViewModels.MainWindowViewModel.viewModelTitle">
+            <summary>
+            タイトルを保持します。
+            </summary>
+        </member>
+        <member name="F:EarthQuakeInfo.ViewModels.MainWindowViewModel.reportMapImage">
+            <summary>
+            地震情報の <see cref="T:System.Windows.Media.Imaging.BitmapImage"/> を保持します。
+            </summary>
+        </member>
+        <member name="F:EarthQuakeInfo.ViewModels.MainWindowViewModel.previousID">
+            <summary>
+            前回の ID を保持します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ViewModels.MainWindowViewModel.ViewModelTitle">
+            <summary>
+            タイトルを取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ViewModels.MainWindowViewModel.ReportMapImage">
+            <summary>
+            地震情報の <see cref="T:System.Windows.Media.Imaging.BitmapImage"/> を取得または設定します。
+            </summary>
+        </member>
+        <member name="M:EarthQuakeInfo.ViewModels.MainWindowViewModel.Refresh">
+            <summary>
+            内容の更新を行います。
+            </summary>
+        </member>
+        <member name="T:EarthQuakeInfo.ZishinInfomation">
+            <summary>
+            地震情報を提供します。
+            </summary>
+        </member>
+        <member name="F:EarthQuakeInfo.ZishinInfomation.BINDING_URI">
+            <summary>
+            このクラスが対応する URI を表します。
+            </summary>
+        </member>
+        <member name="F:EarthQuakeInfo.ZishinInfomation.REPORTMAP_URI_FORMAT">
+            <summary>
+            ReportMapUri のフォーマットを表します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.BindingUri">
+            <summary>
+            対応する URI を取得します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.EventID">
+            <summary>
+            EventID を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.ID">
+            <summary>
+            ID を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.MagnitudeFloat">
+            <summary>
+            MagnitudeFloat を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.MaxIntensity">
+            <summary>
+            MaxIntensity を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.ObservationCity">
+            <summary>
+            ObservationCity
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.ObservationDetail">
+            <summary>
+            ObservationDetail を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.OtherInfo">
+            <summary>
+            OtherInfo を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.Place">
+            <summary>
+            Place を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.QuakeDateTime">
+            <summary>
+            QuakeDateTime を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation._QuakeDateTime">
+            <summary>
+            整合用の QuakeDateTime を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.ReportMap">
+            <summary>
+            ReportMap を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.ReportMapUri">
+            <summary>
+            ReportMapUri を取得します。
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.ZishinInfomation.Type">
+            <summary>
+            Type を取得または設定します。
+            </summary>
+        </member>
+        <member name="T:EarthQuakeInfo.App">
+            <summary>
+            App.xaml の相互作用ロジック
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:EarthQuakeInfo.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:EarthQuakeInfo.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:EarthQuakeInfo.Views.MainWindow">
+            <summary>
+            MainWindow.xaml の相互作用ロジック
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="F:EarthQuakeInfo.Views.MainWindow.timer">
+            <summary>
+            表示更新用のタイマーを保持します。
+            </summary>
+        </member>
+        <member name="M:EarthQuakeInfo.Views.MainWindow.#ctor">
+            <summary>
+            <see cref="T:EarthQuakeInfo.Views.MainWindow"/> クラスの新しいインスタンスを初期化します。
+            </summary>
+        </member>
+        <member name="M:EarthQuakeInfo.Views.MainWindow.Window_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            要素のレイアウトやレンダリングが完了し、操作を受け入れる準備が整ったときに発生します。
+            </summary>
+            <param name="sender">イベントのソース。</param>
+            <param name="e">ルーティング イベントに関連付けられている状態情報とイベント データ。</param>
+        </member>
+        <member name="M:EarthQuakeInfo.Views.MainWindow.Timer_Tick(System.Object,System.EventArgs)">
+            <summary>
+            表示更新用のタイマーの間隔が経過したときに発生します。
+            </summary>
+            <param name="sender">イベントのソース。</param>
+            <param name="e">イベント データを格納していないオブジェクト。</param>
+        </member>
+        <member name="M:EarthQuakeInfo.Views.MainWindow.Window_Unloaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            読み込まれた要素の要素ツリーから要素が削除されたときに発生します。
+            </summary>
+            <param name="sender">イベントのソース。</param>
+            <param name="e">ルーティング イベントに関連付けられている状態情報とイベント データ。</param>
+        </member>
+        <member name="M:EarthQuakeInfo.Views.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EarthQuakeInfo.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:EarthQuakeInfo.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>
