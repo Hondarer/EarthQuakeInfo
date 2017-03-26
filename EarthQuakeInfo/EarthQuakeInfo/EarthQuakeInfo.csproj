@@ -123,6 +123,8 @@
   <ItemGroup>
     <None Include="SampleData\58c457ac0bd9394d36000080.json" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="API\api_usage.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
