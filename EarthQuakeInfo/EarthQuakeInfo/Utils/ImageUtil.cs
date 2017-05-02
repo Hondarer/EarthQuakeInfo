@@ -14,63 +14,61 @@ namespace HondarerSoft.Utils
     public class BitmapImageUtil
     {
         /// <summary>
-        /// バイト配列を <see cref="BitmapImage"/> に変換します。
-        /// この操作は UI スレッドで実行する必要があります。非 UI スレッドで実行すると、深刻なリソース リークを引き起こします。
+        /// バイト配列を <see cref="BitmapImage"/> に変換し、Freeze して返します。
         /// </summary>
         /// <remarks>
         /// http://pierre3.hatenablog.com/entry/2015/10/25/001207
         /// </remarks>
         /// <param name="bytes">バイト配列。</param>
-        /// <param name="freezing">生成した <see cref="BitmapImage"/> を変更不可能にするかどうか。省略可能です。既定値は <c>true</c> です。</param>
         /// <returns>生成した <see cref="BitmapImage"/>。変換に失敗した場合は <c>null</c> を返します。</returns>
-        public static BitmapImage CreateBitmap(byte[] bytes, bool freezing = true)
+        public static BitmapImage CreateBitmap(byte[] bytes)
         {
             if (bytes == null)
             {
                 return null;
             }
 
-            // MemoryStream を生で使うと、BitmapImage 生成後も内部バッファを解放しないため、リソースの利用量が多くなる。
-            // WrappingStream を用いて、Dispose 時に Stream のバッファを解放する。
-            // この処理を UI スレッド以外で行うと、ATOM テーブルに登録が残ってしまい、リソースがリークする。
-            using (WrappingStream stream = new WrappingStream(new MemoryStream(bytes)))
+            BitmapImage bitmap = null;
+
+            // Dispatcher のシャットダウンに対応させる
+            DispatcherHelper.InvokeBackground(() => 
             {
-                try
+                // MemoryStream を生で使うと、BitmapImage 生成後も内部バッファを解放しないため、リソースの利用量が多くなる。
+                // WrappingStream を用いて、Dispose 時に Stream のバッファを解放する。
+                // この処理を UI スレッド以外で行うと(正確には生成された Dispatcher を破棄しないと)、
+                // ATOM テーブルに登録が残ってしまい、リソースがリークする。
+                using (WrappingStream stream = new WrappingStream(new MemoryStream(bytes)))
                 {
-                    BitmapImage bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.StreamSource = stream;
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
-                    if (freezing == bitmap.CanFreeze)
+                    try
                     {
+                        bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.StreamSource = stream;
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
                         bitmap.Freeze();
                     }
-                    return bitmap;
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("{0}", ex.ToString());
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("{0}", ex.ToString());
-                    return null;
-                }
-            }
+            });
+
+            return bitmap;
         }
 
         /// <summary>
         /// バイト配列を指定された <see cref="Dispatcher"/> 上で <see cref="BitmapImage"/> に非同期変換します。
         /// </summary>
         /// <param name="bytes">バイト配列。</param>
-        /// <param name="freezing">生成した <see cref="BitmapImage"/> を変更不可能にするかどうか。省略可能です。既定値は <c>true</c> です。</param>
-        /// <param name="dispatcherForBitmapCreation"><see cref="BitmapImage"/> に変換する際に使用する <see cref="Dispatcher"/>。省略可能です。</param>
         /// <returns>生成した <see cref="BitmapImage"/>を返す非同期操作。変換に失敗した場合は <c>null</c> を返します。</returns>
-        public static async Task<BitmapImage> CreateBitmapAsync(byte[] bytes, bool freezing = true, Dispatcher dispatcherForBitmapCreation = null)
+        public static Task<BitmapImage> CreateBitmapAsync(byte[] bytes)
         {
-            if (dispatcherForBitmapCreation == null)
+            return Task.Run(new Func<BitmapImage>(() =>
             {
-                dispatcherForBitmapCreation = System.Windows.Application.Current.Dispatcher;
-            }
-
-            return await dispatcherForBitmapCreation.InvokeAsync(() => CreateBitmap(bytes, freezing));
+                return CreateBitmap(bytes);
+            }));
         }
 
         /// <summary>
@@ -82,9 +80,8 @@ namespace HondarerSoft.Utils
         /// 省略時は内部で <see cref="HttpClient"/> のインスタンスを生成します。
         /// ソケットに関する資源の問題から、本パラメータには呼び出し元で管理された静的な <see cref="HttpClient"/> のインスタンスを指定することを推奨します。
         /// </param>
-        /// <param name="dispatcherForBitmapCreation"><see cref="BitmapImage"/> に変換する際に使用する <see cref="Dispatcher"/>。省略可能です。</param>
         /// <returns><see cref="BitmapImage"/> を返す非同期操作。失敗した場合は <c>null</c> を返します。</returns>
-        public static async Task<BitmapImage> GetImageAsync(string uri, HttpClient client = null, Dispatcher dispatcherForBitmapCreation = null)
+        public static async Task<BitmapImage> GetImageAsync(string uri, HttpClient client = null)
         {
             if (string.IsNullOrEmpty(uri) == true)
             {
@@ -92,7 +89,7 @@ namespace HondarerSoft.Utils
             }
 
             byte[] bytes = await HttpClientUtil.SafeGetByteArrayAsync(uri, client).ConfigureAwait(false);
-            return await CreateBitmapAsync(bytes, true, dispatcherForBitmapCreation);
+            return await CreateBitmapAsync(bytes);
         }
     }
 }

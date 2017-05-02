@@ -127,7 +127,15 @@ namespace HondarerSoft.Utils
 
                 if (isHitEngine == true)
                 {
-                    spVoice.Speak(str, SpeechVoiceSpeakFlags.SVSFIsXML);
+                    try
+                    {
+                        spVoice.Speak(str, SpeechVoiceSpeakFlags.SVSFIsXML);
+                    }
+                    catch (Exception ex)
+                    {
+                        // 何かしらの異常
+                        Console.WriteLine("例外が発生しました。:\r\n{0}", ex.ToString());
+                    }
                 }
                 else
                 {
